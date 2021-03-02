@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class PriceItemRule extends Model
 {
+    protected $fillable = [
+        'price_overwrite',
+        'markup',
+        'is_weekday',
+        'is_weekend',
+        'location_id',
+        'membership_id',
+        'disable',
+        'price_item_id'
+    ];
+
     public function location()
     {
         return $this->belongsTo(Location::class);
@@ -14,6 +25,10 @@ class PriceItemRule extends Model
     public function membership()
     {
         return $this->belongsTo(Membership::class);
+    }
+
+    public function scopeId($query, $id) {
+        $query->where('id', $id);
     }
 
     public function scopeIsWeekday($query, $value) {
