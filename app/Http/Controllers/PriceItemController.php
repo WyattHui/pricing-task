@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PriceItem;
 use App\Http\Controllers\Controller;
 
-class ProductController extends Controller
+class PriceItemController extends Controller
 {
     public function get($id)
     {
@@ -18,7 +18,7 @@ class ProductController extends Controller
                 'priceItemRules.location',
                 'priceItemRules.membership'
             ])
-            ->get();
+            ->first();
     }
 
     public function quote($id, Request $request)
@@ -63,11 +63,14 @@ class ProductController extends Controller
 
         $finalPrice = $priceItem->price;
         foreach ($priceItem->priceItemRules as $item) {
-            if(!is_null($item->price_overwrite)) {
+            if (!is_null($item->price_overwrite)) {
                 $finalPrice = $item->price_overwrite;
             }
-            if(!is_null($item->markup)) {
+            if (!is_null($item->markup)) {
                 $finalPrice = $finalPrice * $item->markup;
+            }
+            if ($item->disable) {
+                $priceItem->disable = true;
             }
         }
         $priceItem->final_price = $finalPrice;

@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PriceItemController;
+use App\Http\Controllers\PriceItemRuleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group([], function ($route) {
-    $route->get('get/{id}', [ProductController::class, 'get']);
-    $route->get('quote/{id}', [ProductController::class, 'quote']);
+    $route->group(['prefix' => 'price-item'], function ($route) {
+        $route->get('get/{id}', [PriceItemController::class, 'get']);
+        $route->get('quote/{id}', [PriceItemController::class, 'quote']);
+    });
+    $route->group(['prefix' => 'price-item-rule'], function ($route) {
+        $route->post('', [PriceItemRuleController::class, 'create']);
+        $route->put('{priceItemRule}', [PriceItemRuleController::class, 'update']);
+        $route->get('list', [PriceItemRuleController::class, 'list']);
+        $route->get('get/{priceItemRule}', [PriceItemRuleController::class, 'get']);
+    });
 });

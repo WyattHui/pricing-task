@@ -10,5 +10,11 @@ Flexible engine that allows us to add rules which implements types of logic, app
     composer install
     ```
 
+* Migrate database
+
+    ```
+    php artisan migrate
+    ```
+
 ### Team contacts
 * Wyatt Hui (wyatt.hui.1104@gmail.com)
