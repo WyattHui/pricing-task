@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group([], function ($route) {
+    $route->get('get/{id}', [ProductController::class, 'get']);
+    $route->get('quote/{id}', [ProductController::class, 'quote']);
 });

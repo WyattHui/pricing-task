@@ -18,4 +18,8 @@ class PriceItem extends Model
     {
         return $this->hasMany(PriceItemRule::class);
     }
+
+    public function scopeId($query, $id) {
+        $query->where('id', $id);
+    }
 }
